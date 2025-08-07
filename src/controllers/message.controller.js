@@ -52,7 +52,6 @@ export const sendMessage = async (req, res) => {
       const uploadResponse = await cloudinary.uploader.upload(image);
       imageUrl = uploadResponse.secure_url;
     }
-    console.log(imageUrl, "line 55"); 
 
     const newMessage = new Message({
       senderId,
@@ -64,7 +63,6 @@ export const sendMessage = async (req, res) => {
     await newMessage.save();
 
     const receiverSocketId = getReceiverSocketId(receiverId);
-    console.log(receiverSocketId, "line 67"); 
     if (receiverSocketId) {
       io.to(receiverSocketId).emit("newMessage", newMessage);
     }
